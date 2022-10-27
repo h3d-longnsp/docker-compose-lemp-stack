@@ -5,15 +5,16 @@ services:
 
   # Nginx Service
   nginx:
-    image: nginx:1.23.2
+    image: nginx:1.23.2-alpine
     ports:
       - 80:80
-      - 443:443
     volumes:
       - ./src:/var/www/php
       - ./.docker/nginx/conf.d:/etc/nginx/conf.d
+      - phpmyadmindata:/var/www/phpmyadmin
     depends_on:
       - php
+      - phpmyadmin
 
   # PHP Service
   php:
@@ -39,13 +40,14 @@ services:
       test: mysqladmin ping -h 127.0.0.1 -u root --password=$$MYSQL_ROOT_PASSWORD
       interval: 5s
       retries: 10
+
   # PhpMyAdmin Service
   phpmyadmin:
-    image: phpmyadmin/phpmyadmin:5.2
-    ports:
-      - 8080:80
+    image: phpmyadmin/phpmyadmin:5.2-fpm-alpine
     environment:
       PMA_HOST: mysql
+    volumes:
+      - phpmyadmindata:/var/www/html
     depends_on:
       mysql:
         condition: service_healthy
@@ -53,3 +55,5 @@ services:
 volumes:
 
   mysqldata:
+
+  phpmyadmindata:

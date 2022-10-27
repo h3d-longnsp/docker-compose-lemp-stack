@@ -34,9 +34,9 @@ Clone this repository.
 
 Start the server in the background using the following command inside the cloned directory: `docker compose up -d`.
 
-Go to `localhost:8080` to access phpmyadmin page. Login using `root`/`MYSQL_ROOT_PASSWORD`.
+Go to `phpmyadmin.test` to access phpmyadmin page. Login using `root`/`MYSQL_ROOT_PASSWORD`.
 
-To view aggregated logs of every containers, run: `docker compose -f logs`. To view logs of a specific container, run: `docker compose -f logs {CONTAINER_NAME}`
+To view aggregated logs of every containers, run: `docker compose logs -f`. To view logs of a specific container, run: `docker compose logs {SERVICE_NAME}`
 
 ##### Stop the server.
 
